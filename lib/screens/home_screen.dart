@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:receitas/data/receita_inherited.dart';
 import 'package:receitas/data/receitas_dao.dart';
 import 'package:receitas/model/receita.dart';
 
@@ -71,74 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.only(top: 8, bottom: 50),
-        child: FutureBuilder<List<Receita>>(
-          future: ReceitasDao().findAll(),
-          builder: (context, snapshot) {
-            List<Receita>? itens = snapshot.data;
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-                return Center(
-                  child: Column(
-                    children: const [
-                      CircularProgressIndicator(),
-                      Text('Carregando'),
-                    ],
-                  ),
-                );
-
-              case ConnectionState.waiting:
-                return Center(
-                  child: Column(
-                    children: const [
-                      CircularProgressIndicator(),
-                      Text('Carregando'),
-                    ],
-                  ),
-                );
-              case ConnectionState.active:
-                return Center(
-                  child: Column(
-                    children: const [
-                      CircularProgressIndicator(),
-                      Text('Carregando'),
-                    ],
-                  ),
-                );
-              case ConnectionState.done:
-                if (snapshot.hasData && itens != null) {
-                  if (itens.isNotEmpty) {
-                    return ListView.builder(
-                        itemCount: itens.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final Receita receitas = itens[index];
-                          return receitas;
-                        });
-                  }
-                  return Center(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    // não implementado em vídeo por descuido meu, desculpem.
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    // essa linha de layout deixa o conteudo totalmente centralizado.
-                    children: const [
-                      Icon(
-                        Icons.error_outline,
-                        size: 128,
-                      ),
-                      Text(
-                        'Não há nenhuma Tarefa',
-                        style: TextStyle(fontSize: 32),
-                      ),
-                    ],
-                  ));
-                }
-                return const Text('Erro ao carregar tarefas');
-            }
-          },
-        ),
-      ),
+      body: ListView(
+        children: [
+          TaskInherited.of(context).receitaList,
+        ],
+      )
     );
   }
 }

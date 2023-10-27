@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:receitas/data/receita_inherited.dart';
 import 'package:receitas/screens/home_screen.dart';
 import 'package:receitas/screens/initial_screen.dart';
 import 'package:receitas/screens/recipe_add_screen.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       ),
      initialRoute: '/',
      routes: {
-      '/' :(context) => InitialScreen(),
+      '/' :(context) => TaskInherited(child: InitialScreen()),
       '/homeScreen' :(context) => HomeScreen(),
       '/recipeAddScreen' :(context) => RecipeAddScreen(),
 

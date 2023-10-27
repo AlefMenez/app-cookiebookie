@@ -152,6 +152,11 @@ class _RecipeAddScreenState extends State<RecipeAddScreen> {
                     ),
                   ),
                   child: TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        
+                      });
+                    },
                     controller: imageUrlController,
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -161,6 +166,26 @@ class _RecipeAddScreenState extends State<RecipeAddScreen> {
                     textInputAction: TextInputAction.done,
                   ),
                 ),
+                 Container(
+                    height: 100,
+                    width: 72,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 2, color: Colors.blue),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        imageUrlController.text,
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                          return Image.asset('assets/images/nophoto.png');
+                        },
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                 SizedBox(height: 16),
                 Center(
                   child: GestureDetector(
