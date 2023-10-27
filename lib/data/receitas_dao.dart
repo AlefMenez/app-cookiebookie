@@ -1,5 +1,5 @@
+import 'package:receitas/components/receita.dart';
 import 'package:receitas/data/database.dart';
-import 'package:receitas/model/receita.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ReceitasDao {
@@ -18,7 +18,7 @@ class ReceitasDao {
   save(Receita receita) async {
     print('Iniciando save: ');
     final Database bancoDeDados = await getDatabase();
-    var receitaExists = await find(receita.name);
+    var receitaExists = await find(receita.nome!);
     Map<String, dynamic> receitasMap = toMap(receita);
     if (receitaExists.isEmpty) {
       print('A receita nao existia');
@@ -30,7 +30,7 @@ class ReceitasDao {
         receitasMap,
         where: '$_name = ?',
         whereArgs: [
-          receita.name,
+          receita.nome,
         ],
       );
     }
@@ -39,7 +39,7 @@ class ReceitasDao {
   Map<String, dynamic> toMap(Receita receita) {
     print('convertendo receita em map: ');
     final Map<String, dynamic> mapaDeReceitas = Map();
-    mapaDeReceitas[_name] = receita.name;
+    mapaDeReceitas[_name] = receita.nome;
     mapaDeReceitas[_ingredientes] = receita.ingredients;
     mapaDeReceitas[_preparo] = receita.preparation;
     mapaDeReceitas[_imagem] = receita.imageUrl;
@@ -61,9 +61,11 @@ class ReceitasDao {
     final List<Receita> receitas = [];
     for (Map<String, dynamic> linha in listaDeReceitas) {
       final Receita receita = Receita(
-          name: linha[_name],
+          nome: linha[_name],
           ingredients: linha[_ingredientes],
-          preparation: linha[_preparo]);
+          preparation: linha[_preparo],
+          imageUrl: linha[_imagem],);
+          
       receitas.add(receita);
     }
     print('Lista de receitas: $receitas');

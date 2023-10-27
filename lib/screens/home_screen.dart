@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:receitas/data/receita_inherited.dart';
-import 'package:receitas/data/receitas_dao.dart';
-import 'package:receitas/model/receita.dart';
+
+
 
 class HomeScreen extends StatefulWidget {
-  final Receita? newRecipe;
-  const HomeScreen({super.key, this.newRecipe});
+ 
+  const HomeScreen({super.key, });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -73,9 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: ListView(
-        children: [
-          TaskInherited.of(context).receitaList,
-        ],
+        children: 
+         ReceitaInherited.of(context).receitaList,
+        
       )
     );
   }

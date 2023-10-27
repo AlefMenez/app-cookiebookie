@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
       ),
      initialRoute: '/',
      routes: {
-      '/' :(context) => TaskInherited(child: InitialScreen()),
-      '/homeScreen' :(context) => HomeScreen(),
+      '/' :(context) => const InitialScreen(),
+      '/homeScreen' :(context) => ReceitaInherited(child: const HomeScreen()),
       '/recipeAddScreen' :(context) => RecipeAddScreen(),
 
      },
