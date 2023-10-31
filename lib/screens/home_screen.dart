@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:receitas/data/receita_inherited.dart';
+import 'package:receitas/components/receita.dart';
+import 'package:receitas/data/database.dart';
 
-
+import 'package:receitas/data/receitas_dao.dart';
 
 class HomeScreen extends StatefulWidget {
- 
-  const HomeScreen({super.key, });
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -15,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    getDatabase();
   }
 
   @override
@@ -72,11 +75,67 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: ListView(
-        children: 
-         ReceitaInherited.of(context).receitaList,
-        
-      )
+      body: Padding(
+        padding: EdgeInsets.all(8),
+        child: FutureBuilder<List<Receita>>(
+          future: ReceitasDao().findAll(),
+          builder: (context, snapshot) {
+            List<Receita>? receitas = snapshot.data;
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return Center(
+                  child: Column(
+                    children: [CircularProgressIndicator(), Text('Carregando')],
+                  ),
+                );
+              case ConnectionState.active:
+                return Center(
+                  child: Column(
+                    children: const [
+                      CircularProgressIndicator(),
+                      Text('Carregando'),
+                    ],
+                  ),
+                );
+
+              case ConnectionState.waiting:
+                return Center(
+                  child: Column(
+                    children: [CircularProgressIndicator(), Text('Carregando')],
+                  ),
+                );
+
+              case ConnectionState.done:
+                if (snapshot.hasData && receitas != null) {
+                  if (receitas.isNotEmpty) {
+                    return ListView.builder(
+                        itemCount: receitas.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final Receita receita = receitas[index];
+                          return receita;
+                        });
+                  }
+                  return Center(
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.error_outline,
+                          size: 128,
+                        ),
+                        Text(
+                          'Não há nenhuma tarefa',
+                          style: TextStyle(fontSize: 32),
+                        )
+                      ],
+                    ),
+                  );
+                }
+                return Text('Erro ao carregar Receita');
+            }
+            return Text('Erro desconhecido');
+          },
+        ),
+      ),
     );
   }
 }

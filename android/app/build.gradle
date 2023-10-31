@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.br.receitas.receitas"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion localProperties.getProperty("flutter.compileSdkVersion").toInteger()
     ndkVersion flutter.ndkVersion
 
     compileOptions {

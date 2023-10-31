@@ -3,17 +3,18 @@ import 'package:receitas/data/database.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ReceitasDao {
-  static const String receitaSql = 'CREATE RECEITA $_receitanome('
+ static const String tableSql = 'CREATE TABLE $_tablename('
       '$_name TEXT, '
       '$_ingredientes TEXT, '
       '$_preparo TEXT, '
       '$_imagem TEXT)';
 
-  static const String _receitanome = 'nomeReceitas';
-  static const String _name = 'macarronada';
-  static const String _ingredientes = 'macarrao';
-  static const String _preparo = '20 min fogo';
-  static const String _imagem = '';
+
+  static const String _tablename = 'receitaTable';
+  static const String _name = 'name';
+  static const String _ingredientes = 'ingredientes';
+  static const String _preparo = 'preparo';
+  static const String _imagem = 'imagem';
 
   save(Receita receita) async {
     print('Iniciando save: ');
@@ -22,11 +23,11 @@ class ReceitasDao {
     Map<String, dynamic> receitasMap = toMap(receita);
     if (receitaExists.isEmpty) {
       print('A receita nao existia');
-      return await bancoDeDados.insert(_receitanome, receitasMap);
+      return await bancoDeDados.insert(_tablename, receitasMap);
     } else {
       print('A receita ja existia');
       return await bancoDeDados.update(
-        _receitanome,
+        _tablename,
         receitasMap,
         where: '$_name = ?',
         whereArgs: [
@@ -51,7 +52,7 @@ class ReceitasDao {
     print('Acessando o findAll: ');
     final Database bancoDeDados = await getDatabase();
     final List<Map<String, dynamic>> receita =
-        await bancoDeDados.query(_receitanome);
+        await bancoDeDados.query(_tablename);
     print('Procurando dados no banco de dados ... encontrado: $receita');
     return toList(receita);
   }
@@ -76,7 +77,7 @@ class ReceitasDao {
     print('Acessando find: ');
     final Database bancoDeDados = await getDatabase();
     final List<Map<String, dynamic>> receita = await bancoDeDados.query(
-      _receitanome,
+      _tablename,
       where: '$_name = ?',
       whereArgs: [nomeDaReceita],
     );
@@ -88,6 +89,6 @@ class ReceitasDao {
     print('deletando receita: $nomeDaReceita');
     final Database bancoDeDados = await getDatabase();
     return bancoDeDados
-        .delete(_receitanome, where: '$_name = ?', whereArgs: [nomeDaReceita]);
+        .delete(_tablename, where: '$_name = ?', whereArgs: [nomeDaReceita]);
   }
 }

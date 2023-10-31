@@ -13,7 +13,7 @@ class ReceitaInherited extends InheritedWidget {
     Receita(nome: 'Macarronada', ingredients: 'Macarrao, bancon, calabresa', preparation: 'mexe tudo e ok', imageUrl: 'https://www.sabornamesa.com.br/media/k2/items/cache/b5b56b2ae93d3dc958cf0c21c9383b18_XL.jpg'),
   ];
 
-  void newTask(String name, String ingredients,String preparation, String photo){
+  void newReceita(String name, String ingredients,String preparation, String photo){
     receitaList.add(Receita(nome: name, ingredients: ingredients, preparation: preparation, imageUrl: photo));
   }
 

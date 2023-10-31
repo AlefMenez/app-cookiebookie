@@ -1,12 +1,24 @@
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:receitas/components/receita.dart';
+
+import 'package:receitas/data/receitas_dao.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RecipeAddScreen extends StatefulWidget {
+  final BuildContext receitaContext;
+
+  const RecipeAddScreen({super.key, required this.receitaContext});
+
   @override
   State<RecipeAddScreen> createState() => _RecipeAddScreenState();
 }
 
 class _RecipeAddScreenState extends State<RecipeAddScreen> {
+  final imagePicker = ImagePicker();
+  File? imageFile;
+
   final formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController ingredientsController = TextEditingController();
@@ -136,68 +148,117 @@ class _RecipeAddScreenState extends State<RecipeAddScreen> {
                 ),
                 SizedBox(height: 16),
                 Text(
-                  'Image Url (opcional)',
+                  'Imagem',
                   style: TextStyle(color: Colors.grey),
                 ),
                 SizedBox(height: 8),
-                Container(
-                  width: double.infinity,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1.0,
-                    ),
-                  ),
-                  child: TextFormField(
-                    onChanged: (value) {
-                      setState(() {
-                        
-                      });
-                    },
-                    controller: imageUrlController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                          left: 10, right: 10, top: 5, bottom: 5),
-                    ),
-                    textInputAction: TextInputAction.done,
-                  ),
-                ),
-                SizedBox(height: 8,),
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                     Container(
-                        height: 100,
-                        width: 72,
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 2, color: Colors.blue),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            imageUrlController.text,
-                            errorBuilder: (BuildContext context, Object exception,
-                                StackTrace? stackTrace) {
-                              return Image.asset('assets/nophoto.png');
-                            },
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                  children: [
+                    CircleAvatar(
+                      radius: 75,
+                      backgroundColor: Colors.grey[200],
+                      child: CircleAvatar(
+                        radius: 65,
+                        backgroundColor: Colors.grey[300],
+                        backgroundImage:
+                            imageFile != null ? FileImage(imageFile!) : null,
                       ),
-                   ],
-                 ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        pick(ImageSource.camera);
+                      },
+                      child: Container(
+                          alignment: Alignment.center,
+                          width: 135,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 4, 122, 107),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                "Tirar foto",
+                                style: TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.white,
+                                    fontFamily: 'Playfair'),
+                              ),
+                            ],
+                          )),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        pick(ImageSource.gallery);
+                      },
+                      child: Container(
+                          alignment: Alignment.center,
+                          width: 135,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(
+                                Icons.filter,
+                                color: Color.fromARGB(255, 4, 122, 107),
+                              ),
+                              Text(
+                                "Selecionar da galeria",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 4, 122, 107),
+                                    fontSize: 10,
+                                    fontFamily: 'Playfair'),
+                              ),
+                            ],
+                          )),
+                    ),
+                  ],
+                ),
                 SizedBox(height: 16),
                 Center(
                   child: GestureDetector(
                     onTap: () {
                       if (formKey.currentState!.validate()) {
-                        
+                        ReceitasDao().save(Receita(
+                          nome: nameController.text,
+                          imageUrl: imageUrlController.text,
+                          ingredients: ingredientsController.text,
+                          preparation: preparationController.text,
+                        ));
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text(
+                            'Criando nova Receita',
+                          ),
+                          backgroundColor: Colors.green,
+                        ));
                         Navigator.pop(context);
                       }
                     },
@@ -227,5 +288,12 @@ class _RecipeAddScreenState extends State<RecipeAddScreen> {
     );
   }
 
-
+  pick(ImageSource source) async {
+    final pickedFile = await imagePicker.pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
+    }
+  }
 }
