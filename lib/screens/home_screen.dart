@@ -25,6 +25,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 4, 122, 107),
+        actions: [
+          IconButton(onPressed: () {
+            setState(() {
+              
+            });
+          }, icon: Icon(Icons.refresh))
+        ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -51,7 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/recipeAddScreen');
+                    Navigator.pushNamed(context, '/recipeAddScreen')
+                        .then((value) => setState(() {}));
                   },
                   child: Container(
                     height: 40,
@@ -85,7 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
               case ConnectionState.none:
                 return Center(
                   child: Column(
-                    children: [CircularProgressIndicator(), Text('Carregando')],
+                    children: [
+                      CircularProgressIndicator(),
+                      Text('Carregando')
+                    ],
                   ),
                 );
               case ConnectionState.active:
@@ -101,7 +112,10 @@ class _HomeScreenState extends State<HomeScreen> {
               case ConnectionState.waiting:
                 return Center(
                   child: Column(
-                    children: [CircularProgressIndicator(), Text('Carregando')],
+                    children: [
+                      CircularProgressIndicator(),
+                      Text('Carregando')
+                    ],
                   ),
                 );
 

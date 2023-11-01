@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:receitas/components/receita.dart';
 import 'package:receitas/data/database.dart';
 import 'package:sqflite/sqflite.dart';
@@ -43,7 +45,7 @@ class ReceitasDao {
     mapaDeReceitas[_name] = receita.nome;
     mapaDeReceitas[_ingredientes] = receita.ingredients;
     mapaDeReceitas[_preparo] = receita.preparation;
-    mapaDeReceitas[_imagem] = receita.imageUrl;
+    mapaDeReceitas[_imagem] = receita.imageFile?.path;
     print('Mapa de Receitas: $mapaDeReceitas');
     return mapaDeReceitas;
   }
@@ -65,7 +67,7 @@ class ReceitasDao {
           nome: linha[_name],
           ingredients: linha[_ingredientes],
           preparation: linha[_preparo],
-          imageUrl: linha[_imagem],);
+          imageFile: linha[_imagem] != null ? File(linha[_imagem]) : null,);
           
       receitas.add(receita);
     }

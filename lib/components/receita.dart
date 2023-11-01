@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
-class Receita extends StatefulWidget {
+import 'package:receitas/data/receitas_dao.dart';
+
+class Receita extends StatelessWidget {
   final String? nome;
   final String? ingredients;
   final String? preparation;
-  final String? imageUrl;
+  final File? imageFile;
 
   Receita(
-      {Key? key, this.nome, this.ingredients, this.preparation, this.imageUrl})
+      {Key? key, this.nome, this.ingredients, this.preparation, this.imageFile})
       : super(key: key);
-
-  @override
-  State<Receita> createState() => _ReceitaState();
-}
-
-class _ReceitaState extends State<Receita> {
-  bool assetOrNetwork() {
-    if (widget.imageUrl!.contains('http')) {
-      return false;
-    }
-    return true;
-  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12),
-      child: Stack(
-        children: [
-          Container(
+      child: GestureDetector(
+        onLongPress: () {
+          ReceitasDao().delete(nome!);
+          print('removendo receita');
+        },
+        child: Stack(
+          children: [
+            Container(
               width: MediaQuery.of(context).size.width,
               height: 150,
               decoration: BoxDecoration(
@@ -42,39 +38,49 @@ class _ReceitaState extends State<Receita> {
                   ),
                 ],
               ),
-              child: assetOrNetwork()
-                  ? Image.asset(
-                      widget.imageUrl!,
-                      fit: BoxFit.cover,
-                    )
-                  : Image.network(
-                      widget.imageUrl!,
-                      fit: BoxFit.cover,
-                    )),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                 color: Color.fromARGB(213, 4, 122, 106),
+              child: buildImage(context),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(213, 4, 122, 106),
                   borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10))),
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                widget.nome!,
-                style: const TextStyle(
-                  color: Colors.white, // Cor do texto
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
                 ),
-                textAlign: TextAlign.center,
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  nome!,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  Widget buildImage(BuildContext context) {
+    if (imageFile != null) {
+      return Image.file(
+        imageFile!,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return Image.asset(
+        'assets/nophoto.png',
+        fit: BoxFit.cover,
+      );
+    }
   }
 }

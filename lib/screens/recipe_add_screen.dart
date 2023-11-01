@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:receitas/components/receita.dart';
@@ -18,6 +19,8 @@ class RecipeAddScreen extends StatefulWidget {
 class _RecipeAddScreenState extends State<RecipeAddScreen> {
   final imagePicker = ImagePicker();
   File? imageFile;
+ 
+
 
   final formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
@@ -248,7 +251,7 @@ class _RecipeAddScreenState extends State<RecipeAddScreen> {
                       if (formKey.currentState!.validate()) {
                         ReceitasDao().save(Receita(
                           nome: nameController.text,
-                          imageUrl: imageUrlController.text,
+                          imageFile: imageFile,
                           ingredients: ingredientsController.text,
                           preparation: preparationController.text,
                         ));
@@ -288,12 +291,13 @@ class _RecipeAddScreenState extends State<RecipeAddScreen> {
     );
   }
 
-  pick(ImageSource source) async {
-    final pickedFile = await imagePicker.pickImage(source: source);
+pick(ImageSource source) async {
+  final pickedFile = await imagePicker.pickImage(source: source);
     if (pickedFile != null) {
+      final file = File(pickedFile.path);
       setState(() {
-        imageFile = File(pickedFile.path);
+        imageFile = file;
       });
     }
-  }
+}
 }
