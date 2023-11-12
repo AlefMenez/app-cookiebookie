@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-
 import 'package:receitas/data/receitas_dao.dart';
 
+
 class Receita extends StatelessWidget {
+  int? id;
   final String? nome;
   final String? ingredients;
   final String? preparation;
   final File? imageFile;
+  final VoidCallback? onPressed;
 
-  Receita(
-      {Key? key, this.nome, this.ingredients, this.preparation, this.imageFile})
-      : super(key: key);
+  Receita({
+    Key? key,
+    this.nome,
+    this.ingredients,
+    this.preparation,
+    this.imageFile,
+    this.onPressed, this.id,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +26,9 @@ class Receita extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: GestureDetector(
         onLongPress: () {
-          ReceitasDao().delete(nome!);
-          print('removendo receita');
+          _showDeleteConfirmationDialog(context);
         },
+        onTap: onPressed, // Chame a função de callback aqui
         child: Stack(
           children: [
             Container(
@@ -82,5 +89,33 @@ class Receita extends StatelessWidget {
         fit: BoxFit.cover,
       );
     }
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Excluir Receita"),
+          content: Text("Tem certeza de que deseja excluir esta receita?"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Cancelar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Excluir"),
+              onPressed: () {
+                ReceitasDao().delete(nome!); // Excluir a receita
+                Navigator.of(context).pop(); // Fechar o AlertDialog
+                // Voltar para a tela inicial
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

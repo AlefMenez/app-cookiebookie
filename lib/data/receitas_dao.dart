@@ -6,12 +6,13 @@ import 'package:sqflite/sqflite.dart';
 
 class ReceitasDao {
  static const String tableSql = 'CREATE TABLE $_tablename('
+      '$_id INTEGER PRIMARY KEY AUTOINCREMENT, '
       '$_name TEXT, '
       '$_ingredientes TEXT, '
       '$_preparo TEXT, '
       '$_imagem TEXT)';
 
-
+  static const String _id = 'id';
   static const String _tablename = 'receitaTable';
   static const String _name = 'name';
   static const String _ingredientes = 'ingredientes';
@@ -93,4 +94,14 @@ class ReceitasDao {
     return bancoDeDados
         .delete(_tablename, where: '$_name = ?', whereArgs: [nomeDaReceita]);
   }
+  Future<int> update(Receita receita) async {
+  final Database bancoDeDados = await getDatabase();
+  return await bancoDeDados.update(
+    _tablename,
+    toMap(receita),
+    where: '$_id = ?',
+    whereArgs: [receita.id],
+  );
+}
+
 }

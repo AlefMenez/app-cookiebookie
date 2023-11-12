@@ -4,6 +4,7 @@ import 'package:receitas/screens/home_screen.dart';
 import 'package:receitas/screens/initial_screen.dart';
 import 'package:receitas/screens/recipe_add_screen.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       '/' :(context) => const InitialScreen(),
       '/homeScreen' :(context) => ReceitaInherited(child: const HomeScreen()),
       '/recipeAddScreen' :(context) => RecipeAddScreen(receitaContext: context),
+      
 
      },
     );
