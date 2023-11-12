@@ -1,16 +1,20 @@
-# receitas
+# CookieBookie
 
-A new Flutter project.
+CookieBookie is a simple app for creating and storing your favorite cookie recipes. Perfect for those who love sharing or simply organizing their delicious recipes.
 
-## Getting Started
+![scrcpy_2BMmhgsUsm](https://github.com/AlefMenez/app-cookiebookie/assets/107272586/f0a637f0-ab1a-4857-8657-be12751aeec1)
+![scrcpy_vBrAVhvgvq](https://github.com/AlefMenez/app-cookiebookie/assets/107272586/64d6046a-19e1-4a4c-adab-b1aec2b5d139)
+![scrcpy_X3CUVhDg1Q](https://github.com/AlefMenez/app-cookiebookie/assets/107272586/7b8bf091-a740-43df-8ae8-a659aa4d6ff0)
+## Key Features
 
-This project is a starting point for a Flutter application.
+* **Simple Recipe Adding:** Create and share your favorite recipes easily by adding essential information like ingredients, preparation method, and a tasty photo.
 
-A few resources to get you started if this is your first Flutter project:
+* **Intuitive Organization:** Keep your recipes in order with an intuitive interface, allowing you to quickly find them when you're ready to cook.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+  ## Key Features
+    1. **Isntallation:**
+       * Clone this repository on your local machine.
+ ```bash
+git clone https://github.com/AlefMenez/cookiebookie.git
+  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
