@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:receitas/components/receita.dart';
 
 import 'package:receitas/data/receitas_dao.dart';
@@ -36,12 +37,12 @@ class _RecipeAddScreenState extends State<RecipeAddScreen> {
         backgroundColor: const Color.fromARGB(255, 4, 122, 107),
         title: Text(
           'Adicionar Receita',
-          style: TextStyle(
-            fontFamily: 'Playfair',
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+           style: GoogleFonts.sofia(
+                                textStyle: const TextStyle(
+                              fontSize: 17,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            )),
         ),
       ),
       body: SingleChildScrollView(
@@ -54,7 +55,11 @@ class _RecipeAddScreenState extends State<RecipeAddScreen> {
               children: [
                 Text(
                   'Nome',
-                  style: TextStyle(color: Colors.grey),
+                  style: GoogleFonts.sofia(
+                                textStyle: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey,
+                            )),
                 ),
                 SizedBox(height: 8),
                 Container(

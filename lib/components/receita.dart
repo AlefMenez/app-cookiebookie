@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:io';
 import 'package:receitas/data/receitas_dao.dart';
-
 
 class Receita extends StatelessWidget {
   int? id;
@@ -17,7 +17,8 @@ class Receita extends StatelessWidget {
     this.ingredients,
     this.preparation,
     this.imageFile,
-    this.onPressed, this.id,
+    this.onPressed,
+    this.id,
   }) : super(key: key);
 
   @override
@@ -53,7 +54,7 @@ class Receita extends StatelessWidget {
               right: 0,
               child: Container(
                 decoration: const BoxDecoration(
-                  color: Color.fromARGB(213, 4, 122, 106),
+                  color: Color.fromARGB(255, 4, 122, 107),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10),
@@ -62,17 +63,22 @@ class Receita extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 child: Text(
                   nome!,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+                   style: GoogleFonts.sofia(
+                                textStyle: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold
+                            )),
                   textAlign: TextAlign.center,
                 ),
               ),
             ),
+            SizedBox(
+              height: 15,
+            )
           ],
         ),
+        
       ),
     );
   }

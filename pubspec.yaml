@@ -39,6 +39,8 @@ dependencies:
   flutter_native_splash: ^1.2.0
   flutter_launcher_icons: ^0.9.1
   image_picker: ^1.0.4
+  sliding_up_panel: ^2.0.0+1
+  google_fonts: ^6.1.0
 
 flutter_native_splash:
   color: "#047A6B"

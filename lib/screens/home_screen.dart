@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:receitas/components/receita.dart';
 import 'package:receitas/data/receitas_dao.dart';
 import 'package:receitas/screens/recipe_detail_screen.dart';
@@ -22,15 +23,22 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: ElevatedButton(
+        style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 4, 122, 107),
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, '/recipeAddScreen')
+                          .then((value) => setState(() {}));
+        }, child: Icon(Icons.add, color: Colors.white,),
+      ),
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 4, 122, 107),
+          backgroundColor: Colors.transparent,
           actions: [
             IconButton(
               onPressed: () {
-                // Implemente ação de recarregar aqui, se necessário.
                 setState(() {});
               },
-              icon: Icon(Icons.refresh, color: Colors.white),
+              icon: Icon(Icons.refresh, color: Color.fromARGB(255, 4, 122, 107)),
             )
           ],
           title: Row(
@@ -40,50 +48,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     'CookieBookie',
-                    style: TextStyle(
-                      fontFamily: 'Playfair',
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                    style: GoogleFonts.sofia(
+                                textStyle: const TextStyle(
+                              fontSize: 15,
+                              color: Color.fromARGB(255, 4, 122, 107),
+                            )),
                   ),
                   SizedBox(
                     width: 8,
                   ),
                   Icon(
                     Icons.food_bank_outlined,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 4, 122, 107),
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/recipeAddScreen')
-                          .then((value) => setState(() {}));
-                    },
-                    child: Container(
-                      height: 40,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(108, 46, 155, 141),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Adicionar Receita',
-                        style: TextStyle(
-                          fontFamily: 'Playfair',
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
             ],
           ),
         ),
@@ -148,7 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                   return Text('Erro ao carregar Receitas');
               }
-              return Text('Erro desconhecido');
             },
           ),
         ));
