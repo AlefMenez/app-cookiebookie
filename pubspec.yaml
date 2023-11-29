@@ -46,6 +46,12 @@ flutter_native_splash:
   color: "#047A6B"
   image: "assets/app/logo.png"
   android: true
+
+flutter_icons:
+  image_path: "assets/app/icon.jpg"
+  android: "launcher_icon"
+  adaptive_icon_background: "#4BA25B"
+  adaptive_icon_foreground: "assets/app/icon-android.png"
   
  
 
