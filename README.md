@@ -2,9 +2,11 @@
 
 CookieBookie is a simple app for creating and storing your favorite cookie recipes. Perfect for those who love sharing or simply organizing their delicious recipes.
 
-![scrcpy_2BMmhgsUsm](https://github.com/AlefMenez/app-cookiebookie/assets/107272586/f0a637f0-ab1a-4857-8657-be12751aeec1)
-![scrcpy_vBrAVhvgvq](https://github.com/AlefMenez/app-cookiebookie/assets/107272586/64d6046a-19e1-4a4c-adab-b1aec2b5d139)
-![scrcpy_X3CUVhDg1Q](https://github.com/AlefMenez/app-cookiebookie/assets/107272586/7b8bf091-a740-43df-8ae8-a659aa4d6ff0)
+![screen1](https://github.com/AlefMenez/app-cookiebookie/assets/107272586/76c5fe5f-7391-42df-9895-9b7f316be451)
+![screen2](https://github.com/AlefMenez/app-cookiebookie/assets/107272586/81c4e6e1-2dc5-44c1-8583-2c5ffee9c5ba)
+![screen3](https://github.com/AlefMenez/app-cookiebookie/assets/107272586/01195a41-3690-48b6-8bff-711fe58d904d)
+![screen4](https://github.com/AlefMenez/app-cookiebookie/assets/107272586/3f804bf5-47b5-482a-99ed-748a45654556)
+
 ## Key Features
 
 * **Simple Recipe Adding:** Create and share your favorite recipes easily by adding essential information like ingredients, preparation method, and a tasty photo.
