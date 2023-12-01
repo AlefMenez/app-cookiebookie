@@ -29,7 +29,7 @@ class Receita extends StatelessWidget {
         onLongPress: () {
           _showDeleteConfirmationDialog(context);
         },
-        onTap: onPressed, // Chame a função de callback aqui
+        onTap: onPressed, 
         child: Stack(
           children: [
             Container(
@@ -106,13 +106,13 @@ class Receita extends StatelessWidget {
           content: Text("Tem certeza de que deseja excluir esta receita?"),
           actions: <Widget>[
             TextButton(
-              child: Text("Cancelar"),
+              child: Text("Cancelar", style: TextStyle(color: Colors.grey)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text("Excluir"),
+              child: const Text("Excluir", style: TextStyle(color: Color.fromARGB(255, 4, 122, 107)),),
               onPressed: () {
                 ReceitasDao().delete(nome!); // Excluir a receita
                 Navigator.of(context).pop(); // Fechar o AlertDialog
